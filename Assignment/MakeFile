@@ -1,0 +1,39 @@
+CXX := g++
+AR := ar
+
+
+CXXFLAGS := -std=c++17 -O2 -Wall -Wextra -pedantic -march=native
+ARFLAGS := rcs
+
+
+SRC := order_book.cpp
+HDR := order_book.h types.h fast_hash_map.h memory_pool.h
+OBJ := order_book.o
+LIB := liborderbook.a
+
+
+.PHONY: all clean help
+
+
+all: $(LIB)
+
+
+$(OBJ): $(SRC) $(HDR)
+$(CXX) $(CXXFLAGS) -c $(SRC) -o $(OBJ)
+
+
+$(LIB): $(OBJ)
+$(AR) $(ARFLAGS) $(LIB) $(OBJ)
+
+
+clean:
+@echo Cleaning build files...
+-@rm -f $(OBJ) $(LIB)
+@echo Done.
+
+
+help:
+@echo 'Targets:'
+@echo ' all - Build static library'
+@echo ' clean - Remove object and library files'
+@echo ' help - Show this help message'
